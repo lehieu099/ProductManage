@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { RouterModule } from '@angular/router';
+
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
@@ -14,13 +17,16 @@ import { IconsProviderModule } from './icons-provider.module';
 import { LoginComponent } from './login/login.component';
 import { LoginModule } from './login/login.module';
 import { NgZorroAntdModule } from './ng-zorro-antd/ng-zorro-antd.module';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
+import { MainLayoutModule } from './main-layout/main-layout.module';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    MainLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -30,8 +36,13 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     IconsProviderModule,
+    
     LoginModule,
+    MainLayoutModule,
+
     NgZorroAntdModule,
+    RouterModule
+    
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

@@ -36,7 +36,7 @@ import {NzListModule} from 'ng-zorro-antd/list';
 import {NzMentionModule} from 'ng-zorro-antd/mention';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
 import {NzMessageModule} from 'ng-zorro-antd/message';
-import {nzModalAnimations, NzModalModule} from 'ng-zorro-antd/modal';
+import {NzModalModule} from 'ng-zorro-antd/modal';
 import {NzNotificationModule} from 'ng-zorro-antd/notification';
 import {NzPageHeaderModule} from 'ng-zorro-antd/page-header';
 import {NzPaginationModule} from 'ng-zorro-antd/pagination';
@@ -71,6 +71,8 @@ import {NzPipesModule} from 'ng-zorro-antd/pipes';
     CommonModule
   ],
   exports :[
+    NzMenuModule,
+    NzListModule,
     NzAffixModule,
     NzAlertModule,
     NzAnchorModule,

@@ -1,0 +1,93 @@
+<div>
+    <div><button nz-button nzSize="small" nzType="primary" class="btn-addUser" (click)="showModal()">Add User</button>
+    </div>
+    <nz-table #nzTable [nzData]="listOfUser" nzTableLayout='fixed'>
+        <thead>
+            <tr>
+                <th nzCustomFilter>
+                    Name
+                    <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0"
+                        [nzDropdownMenu]="menu">
+                        <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                </th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of nzTable.data">
+                <td>{{data.name}}</td>
+                <td>{{data.email}}</td>
+                <td>{{data.pNumber}}</td>
+                <td>
+                    <a>Action 一 {{ data.name }}</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a>Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <div class="table-filter-dropdown">
+            <div class="search-box">
+                <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue">
+                <button nz-button nzSize="small" nzType="primary" (click)="search()"
+                    class="search-button">Search</button>
+                <button nz-button nzSize="small" (click)="reset()">Reset</button>
+            </div>
+        </div>
+    </nz-dropdown-menu>
+</div>
+<!-- Modal -->
+<div>
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+        (nzOnCancel)="handleCancel()">
+        <ng-template #modalTitle>Add another user</ng-template>
+
+        <ng-template #modalContent>
+            <!--[formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)" -->
+            <form nz-form  >
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..."
+                        [nzErrorTip]="userErrorTpl">
+                        <input nz-input formControlName="userName"
+                            placeholder="user name" />
+                        <ng-template #userErrorTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">Please input your username!
+                            </ng-container>
+                            <ng-container *ngIf="control.hasError('duplicated')">The username is redundant!
+                            </ng-container>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+                        <input nz-input formControlName="email" placeholder="email" type="email" />
+                        <ng-template #emailErrorTpl let-control>
+                            <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!
+                            </ng-container>
+                            <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>Phone number</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="pNumberErrorTip">
+                        <input nz-input formControlName="pNumber" placeholder="phone number" type="text" />
+                        <ng-template #pNumberErrorTip let-control>
+                            <ng-container *ngIf="control.hasError('required')">Please input your phone number!</ng-container>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </ng-template>
+        <ng-template #modalFooter>
+            <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+            <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Submit</button>
+        </ng-template>
+    </nz-modal>
+</div>

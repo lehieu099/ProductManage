@@ -19,6 +19,8 @@ import { LoginModule } from './login/login.module';
 import { NgZorroAntdModule } from './ng-zorro-antd/ng-zorro-antd.module';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { MainLayoutModule } from './main-layout/main-layout.module';
+import { UserComponent } from './pages/UserWorkspace/user/user.component';
+import { ProductComponent } from './ProductWorkSpace/product/product.component';
 
 registerLocaleData(en);
 
@@ -26,7 +28,9 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     LoginComponent,
-    MainLayoutComponent
+    MainLayoutComponent,
+    UserComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

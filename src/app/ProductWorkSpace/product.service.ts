@@ -1,22 +1,39 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { Product } from './product.model';
+import { catchError, filter } from 'rxjs/operators';
 
-const httpOptions={
-  headers:new HttpHeaders({'Content-Type':'Application/json'})
-}
-
-const apiUrl = 'https://61829a8e02f60a001775cdd4.mockapi.io/Product'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  apiUrl = 'https://61829a8e02f60a001775cdd4.mockapi.io/Product';
+  
+  getProduct(
+    pageIndex: number,
+    pageSize: number,
+    sortField: string | null,
+    sortOrder: string | null,
+    filters: Array<{key: string; value: string[]}>
+  ): Observable<{ results: Product[] }> {
 
-  constructor( private httpClient:HttpClient) { }
-
-  getAll():Observable<Product[]>{
-    return this.httpClient.get<Product[]>(apiUrl).pipe()
+    let params = new HttpParams()
+      .append('page', `${pageIndex}`)
+      .append('size', `${pageSize}`)
+      .append('sortField', `${sortField}`)
+      .append('sortOrder', `${sortOrder}`);
+    filters.forEach( filter => {
+      filter.value.forEach(value => {
+        params = params.append(filter.key, value);
+      });
+    });
+    return this.http
+      .get<{ results: Product[] }>(`${this.apiUrl}`, { params })
+      .pipe(catchError(() => of({ results: [] })));
   }
+;
+  constructor(private http: HttpClient) { }
+
 }

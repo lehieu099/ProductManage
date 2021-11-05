@@ -1,6 +1,13 @@
 <!-- <div><button nz-button nzSize="small" nzType="primary" class="btn-addUser" (click)="showModal()">Add User</button> -->
 <!-- </div> -->
-<nz-table #nzTable [nzData]="datas" nzTableLayout='fixed'>
+<nz-table #nzTable 
+[nzData]="datas" 
+nzTableLayout='fixed'
+[nzFrontPagination]="true"
+[nzLoading]="loading"
+[nzPageIndex]="pageIndex"
+[nzPageSize]="pageSize"
+>
     <thead>
         <tr>
             <th nzCustomFilter>

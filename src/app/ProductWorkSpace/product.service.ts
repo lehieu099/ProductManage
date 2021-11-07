@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { Product } from './product.model';
+import { catchError } from 'rxjs/operators';
 
-const httpOptions={
-  headers:new HttpHeaders({'Content-Type':'Application/json'})
-}
-
-const apiUrl = 'https://61829a8e02f60a001775cdd4.mockapi.io/Product'
+const apiUrl = 'https://61829a8e02f60a001775cdd4.mockapi.io/Product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor( private httpClient:HttpClient) { }
+  getProduct(
+    pageIndex: number,
+    pageSize: number
+  ): Observable<Product[] > {
+    let params = new HttpParams()
+      .append('page', `${pageIndex}`)
+      .append('limit', `${pageSize}`);
 
-  getAll():Observable<Product[]>{
-    return this.httpClient.get<Product[]>(apiUrl).pipe()
-  }
+    return this.http.get<Product[] >(`${apiUrl}`, { params })
+    .pipe(catchError(() => of([])));
+  };
+
+  constructor(private http: HttpClient) { }
+
 }

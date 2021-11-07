@@ -12,7 +12,7 @@ export class ProductComponent implements OnInit {
   total = 1;
   datas: Product[]= [];
   loading = true;
-  pageSize = 3;
+  pageSize = 5;
   pageIndex = 1;
 
   loadDataFromServer(pageIndex: number, pageSize: number): void {
@@ -20,9 +20,7 @@ export class ProductComponent implements OnInit {
     this.productService.getProduct(pageIndex, pageSize).subscribe(
       (data) => {
         this.loading = false;
-        this.total = 200;
-        console.log(typeof(this.datas));
-        console.log(data)
+        this.total = 25;
         this.datas = data;
       })
   }

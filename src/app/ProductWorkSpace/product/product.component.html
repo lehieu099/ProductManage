@@ -1,7 +1,6 @@
 <!-- <div><button nz-button nzSize="small" nzType="primary" class="btn-addUser" (click)="showModal()">Add User</button> -->
 <!-- </div> -->
 <nz-table #nzTable [nzData]="datas" nzTableLayout='fixed'  
-nzShowSizeChanger
 [nzData]="datas"
 [nzFrontPagination]="false"
 [nzLoading]="loading"
@@ -11,13 +10,13 @@ nzShowSizeChanger
 (nzQueryParams)="onQueryParamsChange($event)"
 >
     <thead>
-        <tr>
+        <tr class="tr_head">
             <th>ID</th>
             <th>Name</th>
             <th>Type</th>
             <th>Date</th>
             <th>Price</th>
-            <th>Action</th>
+            <th class="action">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +26,7 @@ nzShowSizeChanger
             <td>{{item.type}}</td>
             <td>{{item.date}}</td>
             <td>${{item.price}}</td>
-            <td>
+            <td class="action">
                 <a>Action 一 {{ item.id }}</a>
                 <nz-divider nzType="vertical"></nz-divider>
                 <a>Delete</a>

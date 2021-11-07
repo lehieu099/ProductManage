@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../product.service';
+import { ProductService } from '../../service/product.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Product } from '../product.model';
 
@@ -12,7 +12,7 @@ export class ProductComponent implements OnInit {
   total = 1;
   datas: Product[]= [];
   loading = true;
-  pageSize = 3;
+  pageSize = 5;
   pageIndex = 1;
 
   loadDataFromServer(pageIndex: number, pageSize: number): void {

@@ -4,36 +4,24 @@ import { Observable, of } from 'rxjs';
 import { Product } from './product.model';
 import { catchError, filter } from 'rxjs/operators';
 
+const apiUrl = 'https://61829a8e02f60a001775cdd4.mockapi.io/Product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  apiUrl = 'https://61829a8e02f60a001775cdd4.mockapi.io/Product';
   
   getProduct(
     pageIndex: number,
-    pageSize: number,
-    sortField: string | null,
-    sortOrder: string | null,
-    filters: Array<{key: string; value: string[]}>
-  ): Observable<{ results: Product[] }> {
-
+    pageSize: number
+  ): Observable< Product[] > {
     let params = new HttpParams()
       .append('page', `${pageIndex}`)
-      .append('size', `${pageSize}`)
-      .append('sortField', `${sortField}`)
-      .append('sortOrder', `${sortOrder}`);
-    filters.forEach( filter => {
-      filter.value.forEach(value => {
-        params = params.append(filter.key, value);
-      });
-    });
-    return this.http
-      .get<{ results: Product[] }>(`${this.apiUrl}`, { params })
-      .pipe(catchError(() => of({ results: [] })));
-  }
-;
-  constructor(private http: HttpClient) { }
+      .append('limit', `${pageSize}`);
+
+    return this.http.get<Product[]>(`${apiUrl}`,{ params }).pipe(catchError(() => of([])));
+  };
+
+  constructor(private http: HttpClient) {}
 
 }

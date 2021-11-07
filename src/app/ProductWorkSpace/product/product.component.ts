@@ -10,43 +10,33 @@ import { Product } from '../product.model';
 })
 export class ProductComponent implements OnInit {
   total= 1;
-  datas:Product[]= [];
+  datas : Product[] = [];
   loading = true;
   pageSize= 5;
   pageIndex= 1;
-  filterGender = [
-    
-  ]; 
 
   loadDataFromServer(
     pageIndex: number,
-    pageSize: number,
-    sortField: string | null,
-    sortOrder: string | null,
-    filter: Array<{ key: string; value: string[] }>
+    pageSize: number
   ):void{
     this.loading= true;
-    this.productService.getProduct(pageIndex, pageSize, sortField, sortOrder, filter).subscribe(data => {
+    this.productService.getProduct(pageIndex, pageSize).subscribe(data => {
       this.loading= false;
-      this.total = 200;
-      this.datas= data.results;
+      this.total= 25;
+      this.datas= data;
+      console.log(this.datas);
     })
   }
 
   onQueryParamsChange(params: NzTableQueryParams):void{
-    console.log(params);
-    const {pageSize, pageIndex, sort, filter} = params;
-    const currentSort = sort.find(item => item.value !== null);
-    const sortField = (currentSort && currentSort.key) || null;
-    const sortOrder = (currentSort && currentSort.value) || null;
-    this.loadDataFromServer(pageIndex, pageSize, sortField, sortOrder, filter);
+    const {pageSize, pageIndex} = params;
+    debugger
+    this.loadDataFromServer(pageIndex, pageSize);
   }
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.loadDataFromServer( this.pageIndex, this.pageSize, null, null, []);
+    this.loadDataFromServer( this.pageIndex, this.pageSize);
   }
-
-
 }

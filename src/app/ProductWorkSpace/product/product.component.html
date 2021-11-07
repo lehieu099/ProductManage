@@ -1,12 +1,10 @@
 <!-- <div><button nz-button nzSize="small" nzType="primary" class="btn-addUser" (click)="showModal()">Add User</button> -->
 <!-- </div> -->
-<nz-table #nzTable 
-[nzData]="datas" 
-nzTableLayout='fixed'
-[nzFrontPagination]="true"
-[nzLoading]="loading"
-[nzPageIndex]="pageIndex"
-[nzPageSize]="pageSize"
+<nz-table #nzTable [nzData]="datas" nzTableLayout='fixed' [nzFrontPagination]="true"  
+[nzLoading]="loading" 
+[nzPageIndex]="pageIndex" 
+[nzPageSize]="pageSize" 
+(nzQueryParams)="onQueryParamsChange($event)"
 >
     <thead>
         <tr>
@@ -39,14 +37,3 @@ nzTableLayout='fixed'
         </tr>
     </tbody>
 </nz-table>
-
-<!-- <nz-dropdown-menu #menu="nzDropdownMenu">
-        <div class="table-filter-dropdown">
-            <div class="search-box">
-                <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue">
-                <button nz-button nzSize="small" nzType="primary" (click)="search()"
-                    class="search-button">Search</button>
-                <button nz-button nzSize="small" (click)="reset()">Reset</button>
-            </div>
-        </div>
-    </nz-dropdown-menu> -->

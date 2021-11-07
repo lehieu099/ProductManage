@@ -20,7 +20,7 @@ import { NgZorroAntdModule } from './ng-zorro-antd/ng-zorro-antd.module';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { MainLayoutModule } from './main-layout/main-layout.module';
 import { UserComponent } from './pages/UserWorkspace/user/user.component';
-import { ProductComponent } from './ProductWorkSpace/product/product.component';
+import { ProductComponent } from './pages/ProductWorkspace/product/product.component';
 
 registerLocaleData(en);
 

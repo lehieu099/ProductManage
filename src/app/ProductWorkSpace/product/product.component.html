@@ -1,20 +1,18 @@
 <!-- <div><button nz-button nzSize="small" nzType="primary" class="btn-addUser" (click)="showModal()">Add User</button> -->
 <!-- </div> -->
-<nz-table #nzTable [nzData]="datas" nzTableLayout='fixed' [nzFrontPagination]="true"  
-[nzLoading]="loading" 
-[nzPageIndex]="pageIndex" 
-[nzPageSize]="pageSize" 
+<nz-table #nzTable [nzData]="datas" nzTableLayout='fixed'  
+nzShowSizeChanger
+[nzData]="datas"
+[nzFrontPagination]="false"
+[nzLoading]="loading"
+[nzTotal]="total"
+[nzPageSize]="pageSize"
+[nzPageIndex]="pageIndex"
 (nzQueryParams)="onQueryParamsChange($event)"
 >
     <thead>
         <tr>
-            <th nzCustomFilter>
-                ID
-                <!-- <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0"
-                        [nzDropdownMenu]="menu">
-                        <i nz-icon nzType="search"></i>
-                    </nz-filter-trigger> -->
-            </th>
+            <th>ID</th>
             <th>Name</th>
             <th>Type</th>
             <th>Date</th>

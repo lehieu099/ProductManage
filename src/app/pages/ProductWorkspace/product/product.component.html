@@ -1,0 +1,34 @@
+<!-- <div><button nz-button nzSize="small" nzType="primary" class="btn-addUser" (click)="showModal()">Add User</button> -->
+<!-- </div> -->
+<nz-table #nzTable [nzData]="datas" nzTableLayout='fixed'  
+[nzData]="datas"
+[nzFrontPagination]="false"
+[nzLoading]="loading"
+[nzTotal]="total"
+[nzPageSize]="pageSize"
+[nzPageIndex]="pageIndex"
+(nzQueryParams)="onQueryParamsChange($event)"
+>
+    <thead>
+        <tr class="tr_head">
+            <th>Name</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th class="action">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of datas">
+            <td>{{item.name}}</td>
+            <td>{{item.type}}</td>
+            <td>{{item.date}}</td>
+            <td>${{item.price}}</td>
+            <td class="action">
+                <button nz-button nzType="primary" (click)="editProduct()">Edit</button>
+                <nz-divider nzType="vertical"></nz-divider>
+                <button nz-button nzDanger (click)="delProduct(item.id)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

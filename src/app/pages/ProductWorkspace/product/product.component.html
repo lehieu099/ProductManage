@@ -21,13 +21,13 @@
             <td class="action">
                 <button nz-button nzType="primary" (click)="editProduct()">Edit</button>
                 <nz-divider nzType="vertical"></nz-divider>
-                <button nz-button nzDanger (click)="delProduct(item.id)" >Delete</button>
+                <button nz-button nzDanger (click)="showDelete(item.id)" >Delete</button>
             </td>
         </tr>
     </tbody>
 </nz-table>
 
-<!-- Modal -->
+<!-- Modal Edit -->
 <div>
     <nz-modal #editModal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
         (nzOnCancel)="handleCancel()">

@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../service/product.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Product } from '../product.model';
@@ -13,7 +13,6 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 })
 export class ProductComponent implements OnInit {
 
-  deleteModal?: NzModalRef;
 
   total = 1;
   totalItem: Product[] = [];
@@ -50,29 +49,33 @@ export class ProductComponent implements OnInit {
 
   }
 
-  constructor(private productService: ProductService, private modal: NzModalService) { }
+  constructor(private productService: ProductService, private modalService: NzModalService) { }
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);
     this.TotalItem();
   }
 
-  delProduct(id: number) {
-    this.productService.delProduct(id).subscribe(
-      (data) => { this.datas = data })
-    alert('Product deleted');
-    window.location.reload();
-  }
+  // delProduct(id: number) {
+  //   this.productService.delProduct(id).subscribe(
+  //     (data) => { this.datas = data })
+  //   window.location.reload();
+  // }
 
-  showDelete(): void {
-    this.deleteModal = this.modal.confirm({
+  showDelete(id: number): void {
+    this.modalService.confirm({
       nzTitle: 'Do you want to delete these item?',
-      nzContent: 'Delete',
-      nzOnOk: () =>
-        new Promise((resolve, rejects) => {
-          setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
-        }).catch(() => console.log('Oops errors!'))
+      nzContent: 'Delete?',
+      nzOnOk: () => {
+        console.log('test')
+        this.productService.delProduct(id).subscribe((data) => { this.datas = data }),
+        window.location.reload()
+        // new Promise((resolve, rejects) => {
+        //   setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
+        // }).catch(() => console.log('Oops errors!'))
+      }
     });
+
   }
 
   isVisible = false;

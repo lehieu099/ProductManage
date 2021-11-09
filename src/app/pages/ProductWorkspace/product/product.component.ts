@@ -72,7 +72,7 @@ export class ProductComponent implements OnInit {
           setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
         }).catch(() => console.log('Oops errors!'));
         console.log('test');
-        // window.location.reload();
+        window.location.reload();
       }
     });
 

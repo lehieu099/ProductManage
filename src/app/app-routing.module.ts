@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) },
       { path: 'user', loadChildren: () => import('./pages/UserWorkspace/user.module').then(m => m.UserModule) },
-      { path: 'product', loadChildren: () => import ('./pages/ProductWorkspace/product.module').then(m => m.ProductModule) }
+      { path: 'product', loadChildren: () => import('./pages/ProductWorkspace/product.module').then(m => m.ProductModule) }
     ]
   }
 ];

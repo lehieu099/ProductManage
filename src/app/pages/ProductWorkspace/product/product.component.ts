@@ -67,12 +67,12 @@ export class ProductComponent implements OnInit {
       nzTitle: 'Do you want to delete these item?',
       nzContent: 'Delete?',
       nzOnOk: () => {
-        console.log('test')
         this.productService.delProduct(id).subscribe((data) => { this.datas = data }),
-        window.location.reload()
-        // new Promise((resolve, rejects) => {
-        //   setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
-        // }).catch(() => console.log('Oops errors!'))
+        new Promise((resolve, rejects) => {
+          setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
+        }).catch(() => console.log('Oops errors!'));
+        console.log('test');
+        // window.location.reload();
       }
     });
 

@@ -23,8 +23,13 @@ export class ProductService {
     .pipe(catchError(() => of([])));
   };
 
+  getAll(): Observable<Product[]>{
+    return this.http.get<Product[]>(apiUrl).pipe();
+  }
+  
+
   delProduct(id:number): Observable <Product[]>{
-    return this.http.delete<Product []>(apiUrl + '/' +id)
+    return this.http.delete<Product[]>(apiUrl + '/' +id)
   }
 
   constructor(private http: HttpClient) { }

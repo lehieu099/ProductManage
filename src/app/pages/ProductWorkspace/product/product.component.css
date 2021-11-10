@@ -1,7 +1,8 @@
-.tr_head{
+.tr_head {
     width: fit-content;
+    background: #acaaaa !important;
 }
 
-.action{
+.action {
     width: 13rem;
 }

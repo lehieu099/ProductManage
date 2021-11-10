@@ -3,8 +3,8 @@
 <nz-table #nzTable [nzData]="datas" nzTableLayout='fixed' [nzData]="datas" [nzFrontPagination]="false"
     [nzLoading]="loading" [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
     (nzQueryParams)="onQueryParamsChange($event)">
-    <thead>
-        <tr class="tr_head">
+    <thead class="tr_head">
+        <tr >
             <th>Name</th>
             <th>Type</th>
             <th>Date</th>

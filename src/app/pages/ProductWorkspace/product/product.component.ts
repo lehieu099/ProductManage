@@ -13,8 +13,14 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 })
 export class ProductComponent implements OnInit {
 
+  constructor(private productService: ProductService, private modalService: NzModalService) { }
 
-  total = 1;
+  ngOnInit(): void {
+    this.loadDataFromServer(this.pageIndex, this.pageSize);
+    this.TotalItem();
+  }
+
+  total :number;
   totalItem: Product[] = [];
   datas: Product[] = [];
   loading = true;
@@ -22,10 +28,9 @@ export class ProductComponent implements OnInit {
   pageIndex = 1;
 
   loadDataFromServer(pageIndex: number, pageSize: number): Object {
-    this.loading = true;
+    this.loading = false;
     this.productService.getProduct(pageIndex, pageSize).subscribe(
       (data) => {
-        this.loading = false;
         this.total = this.mountData;
         this.datas = data;
         console.log(this.total);
@@ -33,7 +38,7 @@ export class ProductComponent implements OnInit {
     return this.datas;
   }
 
-  onQueryParamsChange(params: NzTableQueryParams): void {
+  onQueryParamsChange(params: NzTableQueryParams): void{
     console.log(params);
     const { pageSize, pageIndex } = params;
     this.loadDataFromServer(pageIndex, pageSize);
@@ -49,30 +54,22 @@ export class ProductComponent implements OnInit {
 
   }
 
-  constructor(private productService: ProductService, private modalService: NzModalService) { }
-
-  ngOnInit(): void {
-    this.loadDataFromServer(this.pageIndex, this.pageSize);
-    this.TotalItem();
+  delete(id: number) {
+    this.productService.delProduct(id).subscribe((data) => { this.datas = data });
   }
-
-  // delProduct(id: number) {
-  //   this.productService.delProduct(id).subscribe(
-  //     (data) => { this.datas = data })
-  //   window.location.reload();
-  // }
 
   showDelete(id: number): void {
     this.modalService.confirm({
       nzTitle: 'Do you want to delete these item?',
       nzContent: 'Delete?',
       nzOnOk: () => {
-        this.productService.delProduct(id).subscribe((data) => { this.datas = data }),
-        new Promise((resolve, rejects) => {
-          setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
-        }).catch(() => console.log('Oops errors!'));
+        this.delete(id),
+          new Promise((resolve, rejects) => {
+            setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
+          }).catch(() => console.log('Oops errors!'));
         console.log('test');
-        // window.location.reload();
+        this.loadDataFromServer(this.pageIndex, this.pageSize);
+
       }
     });
 

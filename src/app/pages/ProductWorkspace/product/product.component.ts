@@ -20,12 +20,13 @@ export class ProductComponent implements OnInit {
     this.TotalItem();
   }
 
-  total :number;
+  total: number;
   totalItem: Product[] = [];
   datas: Product[] = [];
   loading = true;
-  pageSize = 5;
+  pageSize = 4;
   pageIndex = 1;
+  pageCurrent: number;
 
   loadDataFromServer(pageIndex: number, pageSize: number): Object {
     this.loading = false;
@@ -38,10 +39,11 @@ export class ProductComponent implements OnInit {
     return this.datas;
   }
 
-  onQueryParamsChange(params: NzTableQueryParams): void{
+  onQueryParamsChange(params: NzTableQueryParams) {
     console.log(params);
     const { pageSize, pageIndex } = params;
     this.loadDataFromServer(pageIndex, pageSize);
+    return this.pageCurrent = pageIndex;
   }
 
   mountData = 0;
@@ -56,10 +58,13 @@ export class ProductComponent implements OnInit {
 
   delete(id: number) {
     this.productService.delProduct(id).subscribe((data) => { this.datas = data });
+    this.TotalItem();
+    this.loadDataFromServer(this.pageCurrent, this.pageSize);
   }
 
   showDelete(id: number): void {
     this.modalService.confirm({
+
       nzTitle: 'Do you want to delete these item?',
       nzContent: 'Delete?',
       nzOnOk: () => {
@@ -68,8 +73,6 @@ export class ProductComponent implements OnInit {
             setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
           }).catch(() => console.log('Oops errors!'));
         console.log('test');
-        this.loadDataFromServer(this.pageIndex, this.pageSize);
-
       }
     });
 

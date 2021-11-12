@@ -1,16 +1,15 @@
 .container{
-  margin: auto;
-  padding-top: 10rem;
+  /* margin: auto; */
+  padding-top: 9rem;
   justify-content: center;
-}
-.form-center{
-  border: 0px;
-  
+  height: auto;
 }
 
 .login-form {
-  max-width: 50%;
-
+  border: 1px solid ;
+  max-width: 60%;
+  padding: 2rem;
+  box-shadow: 1px 1px 1px #AAA;
 }
 
 .login-form-margin {

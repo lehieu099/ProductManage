@@ -3,6 +3,8 @@ import { ProductService } from '../../../service/product.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Product } from '../product.model';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 
@@ -13,13 +15,14 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private productService: ProductService, private modalService: NzModalService) { }
+  constructor(private productService: ProductService, private modalService: NzModalService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);
     this.TotalItem();
   }
 
+  editProductForm: FormGroup;
   total: number;
   totalItem: Product[] = [];
   datas: Product[] = [];
@@ -64,7 +67,6 @@ export class ProductComponent implements OnInit {
 
   showDelete(id: number): void {
     this.modalService.confirm({
-
       nzTitle: 'Do you want to delete these item?',
       nzContent: 'Delete?',
       nzOnOk: () => {
@@ -75,7 +77,6 @@ export class ProductComponent implements OnInit {
         console.log('test');
       }
     });
-
   }
 
   isVisible = false;
@@ -85,7 +86,14 @@ export class ProductComponent implements OnInit {
     this.isVisible = true;
   }
 
+  submitEdit(): void {
+    if (this.editProductForm.valid) {
+      console.log(this.editProductForm.value);
+    }
+  }
+
   handleOk(): void {
+
     this.isConfirmLoading = true;
     setTimeout(() => {
       this.isVisible = false;

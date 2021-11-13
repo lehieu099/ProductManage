@@ -40,6 +40,7 @@
         </div>
     </nz-dropdown-menu>
 </div>
+
 <!-- Modal -->
 <div>
     <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
@@ -53,8 +54,10 @@
                     <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..."
                         [nzErrorTip]="userErrorTpl">
-                        <input nz-input formControlName="userName"
-                            placeholder="user name" />
+                        <nz-input-group nzCompact nzSearch>
+                            <input nz-input formControlName="userName"placeholder="user name" />
+                        </nz-input-group>
+                        
                         <ng-template #userErrorTpl let-control>
                             <ng-container *ngIf="control.hasError('required')">Please input your username!
                             </ng-container>

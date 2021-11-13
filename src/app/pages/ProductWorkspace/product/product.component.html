@@ -4,7 +4,7 @@
     [nzLoading]="loading" [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
     (nzQueryParams)="onQueryParamsChange($event)">
     <thead class="tr_head">
-        <tr >
+        <tr>
             <th>Name</th>
             <th>Type</th>
             <th>Date</th>
@@ -20,8 +20,8 @@
             <td>${{item.price}}</td>
             <td class="action">
                 <button nz-button nzType="primary" (click)="editProduct()">Edit</button>
-                <nz-divider nzType="vertical"></nz-divider>
-                <button nz-button nzDanger (click)="showDelete(item.id)" >Delete</button>
+
+                <button nz-button nzDanger (click)="showDelete(item.id)">Delete</button>
             </td>
         </tr>
     </tbody>
@@ -29,13 +29,11 @@
 
 <!-- Modal Edit -->
 <div>
-    <nz-modal #editModal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
-        (nzOnCancel)="handleCancel()">
+    <nz-modal #editModal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+        [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
         <ng-template #modalTitle>Add Product</ng-template>
-
         <ng-template #modalContent>
-            <!--[formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)" -->
-            <form nz-form>
+            <form nz-form [formGroup]="editProductForm" (ngSubmit)="submitEdit()">
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Product Name</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..."

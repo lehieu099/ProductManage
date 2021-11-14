@@ -3,6 +3,8 @@ import { ProductService } from '../../../service/product.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Product } from '../product.model';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 
@@ -13,19 +15,26 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 })
 export class ProductComponent implements OnInit {
 
+  constructor(private productService: ProductService, private modalService: NzModalService, private router: Router) { }
 
-  total = 1;
+  ngOnInit(): void {
+    this.loadDataFromServer(this.pageIndex, this.pageSize);
+    this.TotalItem();
+  }
+
+  editProductForm: FormGroup;
+  total: number;
   totalItem: Product[] = [];
   datas: Product[] = [];
   loading = true;
-  pageSize = 5;
+  pageSize = 4;
   pageIndex = 1;
+  pageCurrent: number;
 
   loadDataFromServer(pageIndex: number, pageSize: number): Object {
-    this.loading = true;
+    this.loading = false;
     this.productService.getProduct(pageIndex, pageSize).subscribe(
       (data) => {
-        this.loading = false;
         this.total = this.mountData;
         this.datas = data;
         console.log(this.total);
@@ -33,10 +42,11 @@ export class ProductComponent implements OnInit {
     return this.datas;
   }
 
-  onQueryParamsChange(params: NzTableQueryParams): void {
+  onQueryParamsChange(params: NzTableQueryParams) {
     console.log(params);
     const { pageSize, pageIndex } = params;
     this.loadDataFromServer(pageIndex, pageSize);
+    return this.pageCurrent = pageIndex;
   }
 
   mountData = 0;
@@ -49,33 +59,24 @@ export class ProductComponent implements OnInit {
 
   }
 
-  constructor(private productService: ProductService, private modalService: NzModalService) { }
-
-  ngOnInit(): void {
-    this.loadDataFromServer(this.pageIndex, this.pageSize);
+  delete(id: number) {
+    this.productService.delProduct(id).subscribe((data) => { this.datas = data });
     this.TotalItem();
+    this.loadDataFromServer(this.pageCurrent, this.pageSize);
   }
-
-  // delProduct(id: number) {
-  //   this.productService.delProduct(id).subscribe(
-  //     (data) => { this.datas = data })
-  //   window.location.reload();
-  // }
 
   showDelete(id: number): void {
     this.modalService.confirm({
       nzTitle: 'Do you want to delete these item?',
       nzContent: 'Delete?',
       nzOnOk: () => {
-        this.productService.delProduct(id).subscribe((data) => { this.datas = data }),
-        new Promise((resolve, rejects) => {
-          setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
-        }).catch(() => console.log('Oops errors!'));
+        this.delete(id),
+          new Promise((resolve, rejects) => {
+            setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
+          }).catch(() => console.log('Oops errors!'));
         console.log('test');
-        window.location.reload();
       }
     });
-
   }
 
   isVisible = false;
@@ -85,7 +86,14 @@ export class ProductComponent implements OnInit {
     this.isVisible = true;
   }
 
+  submitEdit(): void {
+    if (this.editProductForm.valid) {
+      console.log(this.editProductForm.value);
+    }
+  }
+
   handleOk(): void {
+
     this.isConfirmLoading = true;
     setTimeout(() => {
       this.isVisible = false;

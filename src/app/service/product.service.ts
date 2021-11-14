@@ -14,22 +14,21 @@ export class ProductService {
   getProduct(
     pageIndex: number,
     pageSize: number
-  ): Observable<Product[] > {
+  ): Observable<Product[]> {
     let params = new HttpParams()
       .append('page', `${pageIndex}`)
       .append('limit', `${pageSize}`);
 
-    return this.http.get<Product[] >(`${apiUrl}`, { params })
-    .pipe(catchError(() => of([])));
+    return this.http.get<Product[]>(`${apiUrl}`, { params })
+      .pipe(catchError(() => of([])));
   };
 
-  getAll(): Observable<Product[]>{
+  getAll(): Observable<Product[]> {
     return this.http.get<Product[]>(apiUrl).pipe();
   }
-  
 
-  delProduct(id:number): Observable <Product[]>{
-    return this.http.delete<Product[]>(apiUrl + '/' +id)
+  delProduct(id: number): Observable<Product[]> {
+    return this.http.delete<Product[]>(apiUrl + '/' + id).pipe(catchError(() => of([])))
   }
 
   constructor(private http: HttpClient) { }

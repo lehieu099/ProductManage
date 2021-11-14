@@ -62,7 +62,6 @@ export class UserComponent implements OnInit {
   }
 
   handleOk(): void {
-
     for (const i in this.addUserForm.controls) {
       if (this.addUserForm.controls.hasOwnProperty(i)) {
         this.addUserForm.controls[i].markAsDirty();
@@ -76,12 +75,12 @@ export class UserComponent implements OnInit {
       let count = this.listOfUser.length
       this.listOfUser.push(this.addUserForm.value);
 
-      if(this.listOfUser.length - count >0){
+      if (this.listOfUser.length - count > 0) {
         this.isVisible = false
         window.alert("Tao thanh cong")
         console.log(this.listOfUser);
       }
-      else{
+      else {
         this.isVisible = true
         window.alert("Tao that bai")
       }

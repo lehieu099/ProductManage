@@ -3,7 +3,7 @@ import { ProductService } from '../../../service/product.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Product } from '../product.model';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
@@ -15,14 +15,14 @@ import { Router } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private productService: ProductService, private modalService: NzModalService, private router: Router) { }
+  constructor(private productService: ProductService, private modalService: NzModalService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.pageSize);
     this.TotalItem();
   }
 
-  editProductForm: FormGroup;
+  productForm: FormGroup;
   total: number;
   totalItem: Product[] = [];
   datas: Product[] = [];
@@ -59,6 +59,8 @@ export class ProductComponent implements OnInit {
 
   }
 
+
+
   delete(id: number) {
     this.productService.delProduct(id).subscribe((data) => { this.datas = data });
     this.TotalItem();
@@ -71,7 +73,7 @@ export class ProductComponent implements OnInit {
       nzContent: 'Delete?',
       nzOnOk: () => {
         this.delete(id),
-        console.log('test');
+          console.log('test');
       }
     });
   }
@@ -79,23 +81,37 @@ export class ProductComponent implements OnInit {
   isVisible = false;
   isConfirmLoading = false;
 
-  editProduct(): void {
+  addProductModal() {
     this.isVisible = true;
+    this.productForm = this.fb.group({
+      productName: ['', [Validators.required]],
+      type: ['', [Validators.required]],
+      date: ['', [Validators.required]],
+      price: ['', [Validators.required]]
+    });
   }
 
-  submitEdit(): void {
-    if (this.editProductForm.valid) {
-      console.log(this.editProductForm.value);
-    }
+  showEdit(id: number) {
+    this.isVisible = true;
+    return id;
   }
 
   handleOk(): void {
+    // this.isConfirmLoading = true;
+    for (const i in this.productForm.controls) {
+      if (this.productForm.controls.hasOwnProperty(i)) {
+        this.productForm.controls[i].markAsDirty();
+        this.productForm.controls[i].updateValueAndValidity();
+      }
+      console.log("check")
+    }
 
-    this.isConfirmLoading = true;
-    setTimeout(() => {
+    if (!this.productForm.valid) {
+      this.isVisible = true;
+    }
+    else{
       this.isVisible = false;
-      this.isConfirmLoading = false;
-    }, 1000);
+    }
   }
 
   handleCancel(): void {

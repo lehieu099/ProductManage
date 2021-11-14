@@ -1,84 +1,95 @@
-<!-- <div><button nz-button nzSize="small" nzType="primary" class="btn-addUser" (click)="showModal()">Add User</button> -->
-<!-- </div> -->
-<nz-table #nzTable [nzData]="datas" nzTableLayout='fixed' [nzData]="datas" [nzFrontPagination]="false"
-    [nzLoading]="loading" [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
-    (nzQueryParams)="onQueryParamsChange($event)">
-    <thead class="tr_head">
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th class="action">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of datas">
-            <td>{{item.name}}</td>
-            <td>{{item.type}}</td>
-            <td>{{item.date}}</td>
-            <td>${{item.price}}</td>
-            <td class="action">
-                <button nz-button nzType="primary" (click)="editProduct()">Edit</button>
-
-                <button nz-button nzDanger (click)="showDelete(item.id)">Delete</button>
-            </td>
-        </tr>
-    </tbody>
-</nz-table>
-
-<!-- Modal Edit -->
 <div>
-    <nz-modal #editModal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
-        [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
-        <ng-template #modalTitle>Add Product</ng-template>
-        <ng-template #modalContent>
-            <form nz-form [formGroup]="editProductForm" (ngSubmit)="submitEdit()">
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Product Name</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..."
-                        [nzErrorTip]="productErrorTpl">
-                        <input nz-input formControlName="productName" placeholder="Product name" />
-                        <ng-template #productErrorTpl let-control>
-                            <ng-container *ngIf="control.hasError('required')">Please input product name!
-                            </ng-container>
-                        </ng-template>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Type</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="typeErrorTpl">
-                        <input nz-input formControlName="type" placeholder="Type" type="type" />
-                        <ng-template #typeErrorTpl let-control>
-                            <ng-container *ngIf="control.hasError('required')">Please input product type</ng-container>
-                        </ng-template>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Date</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="dateErrorTip">
-                        <input nz-input formControlName="Date" placeholder="Date" type="text" />
-                        <ng-template #dateErrorTip let-control>
-                            <ng-container *ngIf="control.hasError('required')">Please input date import!
-                            </ng-container>
-                        </ng-template>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Price</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="priceErrorTip">
-                        <input nz-input formControlName="Date" placeholder="Price" type="text" />
-                        <ng-template #priceErrorTip let-control>
-                            <ng-container *ngIf="control.hasError('required')">Please input product price!
-                            </ng-container>
-                        </ng-template>
-                    </nz-form-control>
-                </nz-form-item>
-            </form>
-        </ng-template>
-        <ng-template #modalFooter>
-            <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
-            <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Submit</button>
-        </ng-template>
-    </nz-modal>
-</div>
+    <div><button nz-button nzSize="small" nzType="primary" class="btn-addProduct" (click)="addProductModal()">Add
+            Product</button>
+        <nz-table #nzTable [nzData]="datas" nzTableLayout='fixed' [nzData]="datas" [nzFrontPagination]="false"
+            [nzLoading]="loading" [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+            (nzQueryParams)="onQueryParamsChange($event)">
+            <thead class="tr_head">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th class="action">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of datas">
+                    <td>{{item.name}}</td>
+                    <td>{{item.type}}</td>
+                    <td>{{item.date}}</td>
+                    <td>${{item.price}}</td>
+                    <td class="action">
+                        <button nz-button nzType="primary" (click)="showEdit(item.id)">Edit</button>
+
+                        <button nz-button nzDanger (click)="showDelete(item.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <!-- Modal Edit -->
+        <div>
+            <nz-modal #editModal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+                (nzOnCancel)="handleCancel()" [nzFooter]="modalFooter">
+                <ng-template #modalTitle>Add Product</ng-template>
+                <ng-template #modalContent>
+                    <form nz-form [formGroup]="productForm">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="7" nzRequired>Product Name</nz-form-label>
+                            <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..."
+                                [nzErrorTip]="productErrorTpl">
+                                <nz-input-group>
+                                    <input nz-input formControlName="productName" placeholder="Product name" />
+                                </nz-input-group>
+                                <ng-template #productErrorTpl let-control>
+                                    <ng-container *ngIf="control.hasError('required')">Please input product name!
+                                    </ng-container>
+                                </ng-template>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="7" nzRequired>Type</nz-form-label>
+                            <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="typeErrorTpl">
+                                <nz-input-group>
+                                    <input nz-input formControlName="type" placeholder="Type" type="type" />
+                                </nz-input-group>
+                                <ng-template #typeErrorTpl let-control>
+                                    <ng-container *ngIf="control.hasError('required')">Please input product type
+                                    </ng-container>
+                                </ng-template>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="7" nzRequired>Date</nz-form-label>
+                            <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="dateErrorTip">
+                                <nz-input-group>
+                                    <input nz-input formControlName="date" placeholder="Date" type="text" />
+                                </nz-input-group>
+                                <ng-template #dateErrorTip let-control>
+                                    <ng-container *ngIf="control.hasError('required')">Please input date import!
+                                    </ng-container>
+                                </ng-template>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="7" nzRequired>Price</nz-form-label>
+                            <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="priceErrorTip">
+                                <nz-input-group>
+                                    <input nz-input formControlName="price" placeholder="Price" type="text" />
+                                </nz-input-group>
+                                <ng-template #priceErrorTip let-control>
+                                    <ng-container *ngIf="control.hasError('required')">Please input product price!
+                                    </ng-container>
+                                </ng-template>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </form>
+                </ng-template>
+                <ng-template #modalFooter>
+                    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+                    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Submit</button>
+                </ng-template>
+            </nz-modal>
+        </div>
+    </div>

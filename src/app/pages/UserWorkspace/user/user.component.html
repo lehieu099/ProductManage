@@ -57,11 +57,8 @@
                         <nz-input-group nzCompact nzSearch>
                             <input nz-input formControlName="userName" placeholder="user name" />
                         </nz-input-group>
-
                         <ng-template #userErrorTpl let-control>
                             <ng-container *ngIf="control.hasError('required')">Please input your username!
-                            </ng-container>
-                            <ng-container *ngIf="control.hasError('duplicated')">The username is redundant!
                             </ng-container>
                         </ng-template>
                     </nz-form-control>
@@ -73,7 +70,8 @@
                             <input nz-input formControlName="email" placeholder="email" type="email" />
                         </nz-input-group>
                         <ng-template #emailErrorTpl let-control>
-                            <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!</ng-container>
+                            <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!
+                            </ng-container>
                             <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
                         </ng-template>
                     </nz-form-control>

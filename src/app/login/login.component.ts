@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  validateForm : FormGroup;
+  validateForm !: FormGroup;
   
   submitForm(): void {
     for (const i in this.validateForm.controls) {
@@ -27,11 +27,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      userName: [null, [Validators.required]],
+      password: [null, [Validators.required]],
       remember: [true]
     });
-
   }
 
 }

@@ -71,9 +71,6 @@ export class ProductComponent implements OnInit {
       nzContent: 'Delete?',
       nzOnOk: () => {
         this.delete(id),
-          new Promise((resolve, rejects) => {
-            setTimeout(Math.random() > 0.5 ? resolve : rejects, 1000);
-          }).catch(() => console.log('Oops errors!'));
         console.log('test');
       }
     });

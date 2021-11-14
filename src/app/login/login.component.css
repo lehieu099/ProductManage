@@ -9,7 +9,7 @@
   border: 1px solid ;
   max-width: 55%;
   padding: 2rem;
-  box-shadow: 1px 1px 1px #AAA;
+  box-shadow: 1px 1px 1px rgb(247, 238, 238);
 }
 
 .login-form-margin {

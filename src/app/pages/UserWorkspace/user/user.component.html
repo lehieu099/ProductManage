@@ -49,15 +49,15 @@
 
         <ng-template #modalContent>
             <!--[formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)" -->
-            <form nz-form  >
+            <form nz-form [formGroup]="addUserForm">
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..."
                         [nzErrorTip]="userErrorTpl">
                         <nz-input-group nzCompact nzSearch>
-                            <input nz-input formControlName="userName"placeholder="user name" />
+                            <input nz-input formControlName="userName" placeholder="user name" />
                         </nz-input-group>
-                        
+
                         <ng-template #userErrorTpl let-control>
                             <ng-container *ngIf="control.hasError('required')">Please input your username!
                             </ng-container>
@@ -69,10 +69,11 @@
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
-                        <input nz-input formControlName="email" placeholder="email" type="email" />
+                        <nz-input-group>
+                            <input nz-input formControlName="email" placeholder="email" type="email" />
+                        </nz-input-group>
                         <ng-template #emailErrorTpl let-control>
-                            <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!
-                            </ng-container>
+                            <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!</ng-container>
                             <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
                         </ng-template>
                     </nz-form-control>
@@ -80,9 +81,12 @@
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Phone number</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="pNumberErrorTip">
-                        <input nz-input formControlName="pNumber" placeholder="phone number" type="text" />
+                        <nz-input-group>
+                            <input nz-input formControlName="pNumber" placeholder="phone number" type="text" />
+                        </nz-input-group>
                         <ng-template #pNumberErrorTip let-control>
-                            <ng-container *ngIf="control.hasError('required')">Please input your phone number!</ng-container>
+                            <ng-container *ngIf="control.hasError('required')">Please input your phone number!
+                            </ng-container>
                         </ng-template>
                     </nz-form-control>
                 </nz-form-item>

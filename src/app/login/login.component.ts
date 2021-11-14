@@ -8,8 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  validateForm !: FormGroup;
-  
+
+  validateForm : FormGroup;
+
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       if (this.validateForm.controls.hasOwnProperty(i)) {
@@ -23,12 +24,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
-      password: [null, [Validators.required]],
+      userName: ['', [Validators.required]],
+      passWord: ['', [Validators.required]],
       remember: [true]
     });
   }

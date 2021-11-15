@@ -4,7 +4,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Product } from '../product.model';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 
 
@@ -91,10 +90,21 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  showEdit(id: number) {
+  showEdit(ID: number) {
+    console.log(ID);
+    for (const i in this.datas) {
+      if (this.datas[i].id == ID) {
+        this.productForm = this.fb.group({
+          productName: [this.datas[i].name],
+          type: [this.datas[i].type],
+          date: [this.datas[i].date],
+          price: [this.datas[i].price]
+        });
+        debugger;
+      }
+    }
     this.isVisible = true;
-    return id;
-  }
+  };
 
   handleOk(): void {
     // this.isConfirmLoading = true;
@@ -109,7 +119,7 @@ export class ProductComponent implements OnInit {
     if (!this.productForm.valid) {
       this.isVisible = true;
     }
-    else{
+    else {
       this.isVisible = false;
     }
   }

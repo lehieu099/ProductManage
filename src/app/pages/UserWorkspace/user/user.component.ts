@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 interface DataItem {
+  id: number;
   name: string;
   email: string;
   pNumber: string;
@@ -16,7 +18,7 @@ interface DataItem {
 export class UserComponent implements OnInit {
 
   addUserForm: FormGroup
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router, private modalService: NzModalService) { }
 
   ngOnInit(): void {
   }
@@ -25,11 +27,13 @@ export class UserComponent implements OnInit {
   visible = false;
   listUser: DataItem[] = [
     {
+      id: 0,
       name: 'John Brown',
-      email: 'duyhieu099a2@gmail.com',
-      pNumber: '093857214'
+      email: 'John@gmail.com',
+      pNumber: '0123456689'
     },
     {
+      id: 1,
       name: 'Duy Hieu',
       email: 'duyhieu099a2@gmail.com',
       pNumber: '093857214'
@@ -45,6 +49,27 @@ export class UserComponent implements OnInit {
   search(): void {
     this.visible = false;
     this.listOfUser = this.listUser.filter((item: DataItem) => item.name.indexOf(this.searchValue) !== -1);
+  }
+
+  showDelete(id: number): void {
+    this.modalService.confirm({
+      nzTitle: 'Do you want to delete these item?',
+      nzContent: 'Delete?',
+      nzOnOk: () => {
+          console.log('test');
+      }
+    });
+  }
+
+  showEdit(id: number) {
+    console.log(id)
+    console.log(this.listOfUser[id])
+    this.isVisible = true;
+    this.addUserForm = this.fb.group({
+      userName: [this.listOfUser[id].name],
+      email: [this.listOfUser[id].email],
+      pNumber: [this.listOfUser[id].pNumber]
+    })
   }
 
   isVisible = false;
